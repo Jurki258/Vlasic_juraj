@@ -7,7 +7,7 @@ app = Flask(__name__)
 DB_HOST = 'localhost'
 DB_NAME = 'Svet_puzzle'
 DB_USER = 'postgres'
-DB_PASSWORD = ''  # 
+DB_PASSWORD = ''  
 
 def get_data_from_table(table_name):
     conn = psycopg2.connect(
