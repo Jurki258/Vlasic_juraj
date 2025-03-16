@@ -1,9 +1,13 @@
-Technology used: SQL, Python, HTML, Postgre 
+Functional database for eshop Svet-puzzle.sk
+------------------------------------------
+
+Technology used:
 --------------------------------------------
 SQL, Python, HTML, Postgre 
+
 Abstract:
 -------------------------------------------
-This project is for my diploma thesis "Functional database for eshop Svet-puzzle.sk, and marketing analyse for them 
+This project is for my diploma thesis Functional database for eshop Svet-puzzle.sk, and marketing analyse for them 
 
 The project includes:
 -----------------------------------------------------------------------------------------------------------------------
