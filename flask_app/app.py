@@ -3,11 +3,11 @@ import psycopg2
 
 app = Flask(__name__)
 
-# Nastav si tieto údaje podľa tvojej PostgreSQL konfigurácie
+
 DB_HOST = 'localhost'
 DB_NAME = 'Svet_puzzle'
 DB_USER = 'postgres'
-DB_PASSWORD = '2584695'  # <- nahraď za svoje skutočné heslo
+DB_PASSWORD = ''  # 
 
 def get_data_from_table(table_name):
     conn = psycopg2.connect(
