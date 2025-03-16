@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoznam produktov</title>
+  <style>
+    body.background-image {
+        background-image: url("{{ url_for('static', filename='puzzle_pozadie.png') }}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    /* Zosvetľujúca prekryvná vrstva */
+    .overlay {
+        background-color: rgba(255, 255, 255, 0.6); /* Zosvetlí pozadie */
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #000000;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    img.logo {
+      width: 150px;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 400px;
+    }
+
+    select, button {
+        margin-top: 10px;
+        padding: 8px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: rgba(209, 181, 181, 0.2); /* Jemné pozadie tabuľky */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e6f7ff;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+  </style>
+</head>
+
+<body class="background-image">
+  <!-- Zosvetlenie pozadia cez overlay -->
+  <div class="overlay">
+    
+    
+   
+  <h1 style="text-align: center;">Svet-puzzle databáza</h1>
+
+    
+    <div class="container">
+        <form method="GET">
+            <label for="tableSelect">Zvoľ tabuľku na zobrazenie:</label>
+            <select name="table" id="tableSelect">
+                <option value="svet_puzzle_stat" {% if table == 'svet_puzzle_stat' %}selected{% endif %}>Štáty</option>
+                <option value="svet_puzzle_okres" {% if table == 'svet_puzzle_okres' %}selected{% endif %}>Okresy</option>
+                <option value="svet_puzzle_mesto" {% if table == 'svet_puzzle_mesto' %}selected{% endif %}>Mestá</option>
+                <option value="svet_puzzle_partner" {% if table == 'svet_puzzle_partner' %}selected{% endif %}>Partneri</option>
+                <option value="svet_puzzle_dotaznik" {% if table == 'svet_puzzle_dotaznik' %}selected{% endif %}>Dotazníky</option>
+                <option value="svet_puzzle_odoslana_objednavka" {% if table == 'svet_puzzle_odoslana_objednavka' %}selected{% endif %}>Odoslané objednávky</option>
+                <option value="svet_puzzle_prijata_objednavka" {% if table == 'svet_puzzle_prijata_objednavka' %}selected{% endif %}>Prijaté objednávky</option>
+                <option value="svet_puzzle_tovar" {% if table == 'svet_puzzle_tovar' %}selected{% endif %}>Tovar</option>
+                <option value="svet_puzzle_skupina_tovar" {% if table == 'svet_puzzle_skupina_tovar' %}selected{% endif %}>Skupina tovarov</option>
+                <option value="svet_puzzle_platba" {% if table == 'svet_puzzle_platba' %}selected{% endif %}>Platby</option>
+            </select>
+            <button type="submit">Zobraziť</button>
+        </form>
+
+        
+
+        <img src="{{ url_for('static', filename='svet-puzzle1.png') }}" alt="Svet Puzzle Logo" class="logo">
+    </div>
+      {% if table == 'svet_puzzle_stat' %}
+        <h2>Zoznam štátov</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Skratka štátu</th>
+                    <th>Názov štátu</th>
+                    <th>Počet obyvateľov</th>
+                    <th>Rozloha</th>
+                    <th>Popis</th>
+                    <th>Hustota</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in staty %}
+                <tr>
+                    <td>{{ stat[0] }}</td>
+                    <td>{{ stat[1] }}</td>
+                    <td>{{ stat[2] }}</td>
+                    <td>{{ stat[3] }}</td>
+                    <td>{{ stat[4] }}</td>
+                    <td>{{ stat[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      {% elif table == 'svet_puzzle_okres' %}
+        <h2>Zoznam okresov</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Skratka okresu</th>
+                    <th>Názov okresu</th>
+                    <th>Počet obyvateľov</th>
+                    <th>Rozloha</th>
+                    <th>Popis</th>
+                    <th>Hustota</th>
+                    <th>Skratka štát</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for okres in okresy %}
+                <tr>
+                    <td>{{ okres[0] }}</td>
+                    <td>{{ okres[1] }}</td>
+                    <td>{{ okres[2] }}</td>
+                    <td>{{ okres[3] }}</td>
+                    <td>{{ okres[4] }}</td>
+                    <td>{{ okres[5] }}</td>
+                    <td>{{ okres[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      {% elif table == 'svet_puzzle_mesto' %}
+        <h2>Zoznam miest</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Skratka mesto</th>
+                    <th>Názov mesta</th>
+                    <th>Počet obyvateľov</th>
+                    <th>Rozloha</th>
+                    <th>Popis</th>
+                    <th>Hustota</th>
+                    <th>Skratka okres</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mesto in mesta %}
+                <tr>
+                    <td>{{ mesto[0] }}</td>
+                    <td>{{ mesto[1] }}</td>
+                    <td>{{ mesto[2] }}</td>
+                    <td>{{ mesto[3] }}</td>
+                    <td>{{ mesto[4] }}</td>
+                    <td>{{ mesto[5] }}</td>
+                    <td>{{ mesto[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif table == 'svet_puzzle_partner' %}
+        <h2>Zoznam partnerov</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID partnera</th>
+                    <th>Meno partnera</th>
+                    <th>Právna forma</th>
+                    <th>Skratka mesto</th>
+                    <th>Ulica</th>
+                    <th>PSC</th>
+                    <th>Telefon</th>
+                    <th>Email</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for partner in partneri %}
+                <tr>
+                    <td>{{ partner[0] }}</td>
+                    <td>{{ partner[1] }}</td>
+                    <td>{{ partner[2] }}</td>
+                    <td>{{ partner[3] }}</td>
+                    <td>{{ partner[4] }}</td>
+                    <td>{{ partner[5] }}</td>
+                    <td>{{ partner[6] }}</td>
+                    <td>{{ partner[7] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif table == 'svet_puzzle_dotaznik' %}
+        <h2>Zoznam dotazníkov</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID dotazníka</th>
+                    <th>Skratka partnera</th>
+                    <th>Spokojnosť s procesom</th>
+                    <th>Spokojnosť s komunikáciou</th>
+                    <th>Prehľadnosť eshopu</th>
+                    <th>Zdrojový  kanál</th>
+                    <th>Nápady na zlepšenie</th>
+                    <th>Vek</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for dotaznik in dotazniky %}
+                <tr>
+                    <td>{{ dotaznik[0] }}</td>
+                    <td>{{ dotaznik[1] }}</td>
+                    <td>{{ dotaznik[2] }}</td>
+                    <td>{{ dotaznik[3] }}</td>
+                    <td>{{ dotaznik[4] }}</td>
+                    <td>{{ dotaznik[5] }}</td>
+                    <td>{{ dotaznik[6] }}</td>
+                    <td>{{ dotaznik[7] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>    
+        {% elif table == 'svet_puzzle_odoslana_objednavka' %}
+        <h2>Zoznam odoslaných objednávok</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID odoslaná objednávka</th>
+                    <th>ID partnera</th>
+                    <th>Dátum objednania</th>
+                    <th>Dátum dodania</th>
+                    <th>Množstvo tovaru</th>
+                    <th>ID tovar</th>
+                    <th>Zľava</th>
+                    <th>ID platba</th>
+                    <th>ID faktúra</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for odos_objednavka in odos_objednavky %}
+                <tr>
+                    <td>{{ odos_objednavka[0] }}</td>
+                    <td>{{ odos_objednavka[1] }}</td>
+                    <td>{{ odos_objednavka[2] }}</td>
+                    <td>{{ odos_objednavka[3] }}</td>
+                    <td>{{ odos_objednavka[4] }}</td>
+                    <td>{{ odos_objednavka[5] }}</td>
+                    <td>{{ odos_objednavka[6] }}</td>
+                    <td>{{ odos_objednavka[7] }}</td>
+                    <td>{{ odos_objednavka[8] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>   
+        {% elif table == 'svet_puzzle_prijata_objednavka' %}
+        <h2>Zoznam prijatých objednávok</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID prijatá objednávka</th>
+                    <th>ID partnera</th>
+                    <th>Dátum objednania</th>
+                    <th>Dátum dodania</th>
+                    <th>Množstvo tovaru</th>
+                    <th>ID tovar</th>
+                    <th>ID platba</th>
+                    <th>ID faktúra</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for prij_objednavka in prij_objednavky %}
+                <tr>
+                    <td>{{ prij_objednavka[0] }}</td>
+                    <td>{{ prij_objednavka[1] }}</td>
+                    <td>{{ prij_objednavka[2] }}</td>
+                    <td>{{ prij_objednavka[3] }}</td>
+                    <td>{{ prij_objednavka[4] }}</td>
+                    <td>{{ prij_objednavka[5] }}</td>
+                    <td>{{ prij_objednavka[6] }}</td>
+                    <td>{{ prij_objednavka[7] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>    
+        {% elif table == 'svet_puzzle_tovar' %}
+        <h2>Zoznam tovaru</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID tovar</th>
+                    <th>Názov tovaru</th>
+                    <th>Nákupná cena</th>
+                    <th>Predajná cena</th>
+                    <th>Očakávaná marža</th>
+                    <th>Hmotnosť</th>
+                    <th>Popis</th>
+                    <th>Výrobca</th>
+                    <th>ID typ tovar</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for tovar in tovari %}
+                <tr>
+                    <td>{{ tovar[0] }}</td>
+                    <td>{{ tovar[1] }}</td>
+                    <td>{{ tovar[2] }}</td>
+                    <td>{{ tovar[3] }}</td>
+                    <td>{{ tovar[4] }}</td>
+                    <td>{{ tovar[5] }}</td>
+                    <td>{{ tovar[6] }}</td>
+                    <td>{{ tovar[7] }}</td>
+                    <td>{{ tovar[8] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>    
+        {% elif table == 'svet_puzzle_skupina_tovar' %}
+        <h2>Zoznam skupín tovaru</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID skupiny tovar</th>
+                    <th>Popis skupiny</th>
+                    <th>Názov skupiny</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for skupina_tovar in skupina_tovari %}
+                <tr>
+                    <td>{{ skupina_tovar[0] }}</td>
+                    <td>{{ skupina_tovar[1] }}</td>
+                    <td>{{ skupina_tovar[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>    
+
+        {% elif table == 'svet_puzzle_platba' %}
+        <h2>Zoznam platieb</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID platba</th>
+                    <th>Spôsob dopravy</th>
+                    <th>Cena dopravy</th>
+                    <th>Cena platby</th>
+                    <th>Komentár</th>
+                    <th>ID partnera</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for platba in platby %}
+                <tr>
+                    <td>{{ platba[0] }}</td>
+                    <td>{{ platba[1] }}</td>
+                    <td>{{ platba[2] }}</td>
+                    <td>{{ platba[3] }}</td>
+                    <td>{{ platba[4] }}</td>
+                    <td>{{ platba[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>    
+    {% endif %}
+</body>
+</html>
