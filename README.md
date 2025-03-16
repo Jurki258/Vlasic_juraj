@@ -25,10 +25,12 @@ Analysis
 -------------------------------------------------------------------------------------------------
 
 
-Set up web application+ connection to database PostgreSQL
+Set up backend python + connection to database PostgreSQL
 -------------------------------------------------------------
-flask_app/app.py 
+flask_app/app.py
 
+Web application html
+------------------------------
 
 
 
