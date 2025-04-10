@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="sk">
+    <style>
+        body.background-image {
+            background-image: url("{{ url_for('static', filename='puzzle_pozadie.png') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+      
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.6);
+            min-height: 100vh;
+            padding: 20px;
+        }
+      
+        h1 {
+            text-align: center;
+            color: #000000;
+        }
+      
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+      
+        img.logo {
+          width: 150px;
+          height: auto;
+          display: block;
+          margin-left: auto;
+          margin-right: 0;
+        }
+      
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            width: 100%;
+        }
+      
+        select, input, button {
+            margin-top: 6px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+      
+        table {
+            width: 50%;
+            margin: 20px auto; 
+            border-collapse: collapse;
+            background-color: rgba(209, 181, 181, 0.2);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); 
+            border-radius: 8px; 
+            overflow: hidden;
+        }
+      
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+      
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+      
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+      
+        tr:nth-child(even) {
+            background-color: #e6f7ff;
+        }
+      
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+      </style>
+      
+
+<body class="background-image">
+  <!-- Zosvetlenie pozadia cez overlay -->
+  <div class="overlay">
+
+  </head>
+  <body>
+      
+
+    <h1 style="text-align: center;">Ekonomické analýzy</h1>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <div style="margin: 10px 0;">
+            <a href="/">Prejdite na úvodnú stránku</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/delete">Prejdite na vymazávanie z databázy</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/form">Prejdite na vkladanie do databázy</a>
+        </div>
+    </div>
+    <img src="{{ url_for('static', filename='svet-puzzle1.png') }}" alt="Svet Puzzle Logo" class="logo">
+    
+   
+    <form method="POST">
+        <label for="stat">Štát:</label>
+        <select name="stat" id="stat">
+            <option value="-">-</option>
+            <option value="stat">Zahrnúť</option>
+        </select>
+        <br><br>
+    
+        <label for="okres">Okres:</label>
+        <select name="okres" id="okres">
+            <option value="-">-</option>
+            <option value="okres">Zahrnúť</option>
+        </select>
+        <br><br>
+    
+        <label for="mesto">Mesto:</label>
+        <select name="mesto" id="mesto">
+            <option value="-">-</option>
+            <option value="mesto">Zahrnúť</option>
+        </select>
+        <br><br>
+    
+        <label for="partner">Partner:</label>
+        <select name="partner" id="partner">
+            <option value="-">-</option>
+            <option value="partner">Zahrnúť</option>
+        </select>
+        <br><br>
+    
+        <label for="tovar">Tovar:</label>
+        <select name="tovar" id="tovar">
+            <option value="-">-</option>
+            <option value="tovar">Zahrnúť</option>
+        </select>
+        <br><br>
+    
+        <label for="skupina">Skupina tovaru:</label>
+        <select name="skupina" id="skupina">
+            <option value="-">-</option>
+            <option value="skupina">Zahrnúť</option>
+        </select>
+        <br><br>
+    
+        <label for="roky">Rok:</label>
+        <select name="roky" id="roky">
+            <option value="-">Všetky</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <!-- Pridaj ďalšie roky podľa potreby -->
+        </select>
+        <br><br>
+
+        <label for="pravna_forma">Právna_forma:</label>
+        <select name="pravna_forma" id="pravna_forma">
+            <option value="-">Všetky</option>
+            <option value="F_os">F_os</option>
+            <option value="P_os">P_os</option>
+           
+            <!-- Pridaj ďalšie roky podľa potreby -->
+        </select>
+        <br><br>
+    
+        <button type="submit">Zobraziť zisk</button>
+    </form>
+    
+    {% if zisk is not none %}
+        <h2>Zisk: {{ zisk.zisk }} €</h2>
+        <h3>Príjem: {{ zisk.prijem }} €</h3>
+        <h3>Náklady: {{ zisk.naklady }} €</h3>
+    {% endif %}
+    
+    {% if rows %}
+        <table>
+            <tr>
+                {% for field in fields %}
+                    <th>{{ field }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in rows %}
+                <tr>
+                    {% for value in row %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
+

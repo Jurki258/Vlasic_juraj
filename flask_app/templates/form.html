@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="sk">
+    <style>
+        body.background-image {
+            background-image: url("{{ url_for('static', filename='puzzle_pozadie.png') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+      
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.6);
+            min-height: 100vh;
+            padding: 20px;
+        }
+      
+        h1 {
+            text-align: center;
+            color: #000000;
+        }
+      
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+      
+        img.logo {
+          width: 150px;
+          height: auto;
+          display: block;
+          margin-left: auto;
+          margin-right: 0;
+        }
+      
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            width: 100%;
+        }
+      
+        select, input, button {
+            margin-top: 6px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+      
+        table {
+            width: 50%;
+            margin: 20px auto; 
+            border-collapse: collapse;
+            background-color: rgba(209, 181, 181, 0.2);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); 
+            border-radius: 8px; 
+            overflow: hidden;
+        }
+      
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+      
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+      
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+      
+        tr:nth-child(even) {
+            background-color: #e6f7ff;
+        }
+      
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+      </style>
+      
+
+<body class="background-image">
+  <!-- Zosvetlenie pozadia cez overlay -->
+  <div class="overlay">
+
+  </head>
+  <body>
+      
+
+    <h1 style="text-align: center;">Formulár pre vloženie dát</h1>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <div style="margin: 10px 0;">
+            <a href="/">Prejdite na úvodnú stránku</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/delete">Prejdite na vymazávanie z databázy</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/select">Prejdite na analýzu dát</a>
+        </div>
+    </div>
+    <img src="{{ url_for('static', filename='svet-puzzle1.png') }}" alt="Svet Puzzle Logo" class="logo">
+    <script>
+        function toggleFields() {
+            var selected = document.getElementById("tabulka").value;
+            document.getElementById("stat-fields").style.display = (selected === "svet_puzzle_stat") ? "block" : "none";
+            document.getElementById("okres-fields").style.display = (selected === "svet_puzzle_okres") ? "block" : "none";
+            document.getElementById("mesto-fields").style.display = (selected === "svet_puzzle_mesto") ? "block" : "none";
+            document.getElementById("partner-fields").style.display = (selected === "svet_puzzle_partner") ? "block" : "none";
+            document.getElementById("dotaznik-fields").style.display = (selected === "svet_puzzle_dotaznik") ? "block" : "none";
+            document.getElementById("odoslana_objednavka-fields").style.display = (selected === "svet_puzzle_odoslana_objednavka") ? "block" : "none";
+            document.getElementById("prijata_objednavka-fields").style.display = (selected === "svet_puzzle_prijata_objednavka") ? "block" : "none";
+            document.getElementById("tovar-fields").style.display = (selected === "svet_puzzle_tovar") ? "block" : "none";
+            document.getElementById("platba-fields").style.display = (selected === "svet_puzzle_platba") ? "block" : "none";
+            document.getElementById("skupina_tovar-fields").style.display = (selected === "svet_puzzle_skupina_tovar") ? "block" : "none";
+        
+        
+        }   
+    </script>
+</head>
+<body onload="toggleFields()">
+    <form action="/submit" method="POST">
+        <label for="tabulka">Vyber tabuľku:</label>
+        <select name="tabulka" id="tabulka" onchange="toggleFields()">
+            <option value="svet_puzzle_stat">Štát</option>
+            <option value="svet_puzzle_okres">Okres</option>
+            <option value="svet_puzzle_mesto">Mesto</option>
+            <option value="svet_puzzle_partner">Partner</option>
+            <option value="svet_puzzle_dotaznik">Dotazník</option>
+            <option value="svet_puzzle_odoslana_objednavka">Odoslana objednávka</option>
+            <option value="svet_puzzle_prijata_objednavka">Prijatá objednávka</option>
+            <option value="svet_puzzle_tovar">Tovar</option>
+            <option value="svet_puzzle_platba">Platba</option>
+            <option value="svet_puzzle_skupina_tovar">Skupina tovar</option>
+        </select>
+
+        <!-- ŠTÁT -->
+        <div id="stat-fields">
+            <label>Skratka štátu:</label>
+            <input type="text" name="skratka_stat"><br>
+            <label>Názov štátu:</label>
+            <input type="text" name="stat-nazov"><br>
+            <label>Počet obyvateľov:</label>
+            <input type="number" name="stat-obyvatelia"><br>
+            <label>Rozloha:</label>
+            <input type="number" name="stat-rozloha"><br>
+            <label>Popis:</label>
+            <input type="text" name="stat-popis"></textarea><br>
+            <label>Hustota:</label>
+            <input type="number" name="stat-hustota"><br>
+        </div>
+
+        <!-- okres -->
+        <div id="okres-fields" style="display:none;">
+            <label>Skratka okres:</label>
+            <input type="text" name="skratka-okres"><br>
+            <label>Názov okresu:</label>
+            <input type="text" name="okres-nazov"><br>
+            <label>Počet obyvateľov:</label>
+            <input type="number" name="okres-obyvatelia"><br>
+            <label>Rozloha:</label>
+            <input type="number" name="okres-rozloha"><br>
+            <label>Okres popis:</label>
+            <input type="text" name="okres-popis"><br>
+            <label>Okres hustota:</label>
+            <input type="number" name="okres-hustota"><br>
+            <label>Skratka štátu:</label>
+            <input type="text" name="okres-id-stat"><br>
+        </div>
+        
+        
+        
+        <!-- MESTO -->
+        <div id="mesto-fields" style="display:none;">
+            <label>ID mesta:</label>
+            <input type="text" name="mesto-id"><br>
+            <label>Názov mesta:</label>
+            <input type="text" name="mesto-nazov"><br>
+            <label>Počet obyvateľov:</label>
+            <input type="number" name="mesto-obyvatelia"><br>
+            <label>Rozloha:</label>
+            <input type="number" name="mesto-rozloha"><br>
+            <label>Mesto popis:</label>
+            <input type="text" name="mesto-popis"><br>
+            <label>Mesto hustota:</label>
+            <input type="number" name="mesto-hustota"><br>
+            <label>Skratka okres:</label>
+            <input type="text" name="mesto-id-okres"><br>
+        </div>
+
+
+
+
+
+        <!-- PARTNER -->
+        <div id="partner-fields" style="display:none;">
+            <label>ID partnera:</label>
+            <input type="text" name="partner-id"><br>
+            <label>Meno partnera:</label>
+            <input type="text" name="partner-meno"><br>
+            
+            <label>Právna forma:</label>
+            <select name="pravna-forma">
+                <option value="F_os">Fyzická osoba</option>
+                <option value="P_os">Právnická osoba</option>
+            </select><br>
+
+            <label>ID mesta:</label>
+            <input type="text" name="partner-id-mesto"><br>
+            <label>Ulica:</label>
+            <input type="text" name="partner-ulica"><br>
+            <label>PSC:</label>
+            <input type="number" name="partner-psc"><br>
+            <label>Telefónne číslo:</label>
+            <input type="number" name="partner-tel"><br>
+            <label>Email:</label>
+            <input type="text" name="partner-email"><br>
+        </div>
+
+       <!-- DOTAZNIK -->
+       <div id="dotaznik-fields" style="display:none;">
+        <label>ID dotaznik:</label>
+        <input type="text" name="dotaznik-id"><br>
+        <label>ID partnera:</label>
+        <input type="text" name="dotaznik-id-partner"><br>
+        <label>Spokojnosť s procesom:</label>
+        <select name="dotaznik-spoko-proces">
+            <option value="">-- Vyber hodnotu --</option>
+            <option value="1">1 - Veľmi nespokojný</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 - Priemer</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10 - Veľmi spokojný</option>
+        </select><br>
+        <label>Spokojnosť komunikácia:</label>
+        <select name="dotaznik-spoko-komuni">
+            <option value="">-- Vyber hodnotu --</option>
+            <option value="1">1 - Veľmi nespokojný</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 - Priemer</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10 - Veľmi spokojný</option>
+        </select><br>
+        <label>Prehľadnosť eshopu:</label>
+        <select name="dotaznik-preh-eshop">
+            <option value="">-- Vyber hodnotu --</option>
+            <option value="1">1 - Veľmi nespokojný</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 - Priemer</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10 - Veľmi spokojný</option>
+        </select><br>
+        <label>Zdrojový kanál:</label>
+        <input type="text" name="dotaznik-zdroj-kanal"><br>
+        <label>Vek:</label>
+        <input type="number" name="dotaznik-vek"><br>
+    </div>
+        
+    <!-- ODOSLANA OBJEDNAVKA -->
+    <div id="odoslana_objednavka-fields" style="display:none;">
+        <label>ID odoslaná objednávka:</label>
+        <input type="text" name="odos_obj-id"><br>
+        <label>ID partnera:</label>
+        <input type="text" name="odos_obj-id-partner"><br>
+        <label>Dátum objednania:</label>
+        <input type="date" name="odos_obj-datum-objednania"><br>
+        <label>Dátum dodania:</label>
+        <input type="date" name="odos_obj-datum-dodania"><br>
+        <label>Množstvo tovaru:</label>
+        <input type="number" name="odos_obj-mnozstvo-tovaru"><br>
+        <label>ID tovar:</label>
+        <input type="text" name="odos_obj-id-tovar"><br>
+        <label>Zľava:</label>
+        <input type="number" name="odos_obj-zlava"><br>
+        <label>ID platba:</label>
+        <input type="text" name="odos_obj-id-platba"><br>
+        <label>ID faktúra:</label>
+        <input type="text" name="odos_obj-faktura"><br>
+    </div>      
+
+
+
+
+    <!-- PRIJATA OBJEDNAVKA -->
+    <div id="prijata_objednavka-fields" style="display:none;">
+        <label>ID prijatá objednávka:</label>
+        <input type="text" name="prij_obj-id"><br>
+        <label>ID partnera:</label>
+        <input type="text" name="prij_obj-id-partner"><br>
+        <label>Dátum objednania:</label>
+        <input type="date" name="prij_obj-datum-objednania"><br>
+        <label>Dátum dodania:</label>
+        <input type="date" name="prij_obj-datum-dodania"><br>
+        <label>Množstvo tovaru:</label>
+        <input type="number" name="prij_obj-mnozstvo-tovaru"><br>
+        <label>ID tovar:</label>
+        <input type="text" name="prij_obj-id-tovar"><br>
+        <label>ID platba:</label>
+        <input type="text" name="prij_obj-id-platba"><br>
+        <label>ID faktúra:</label>
+        <input type="text" name="prij_obj-faktura"><br>
+    </div>      
+       
+
+
+    <!-- TOVAR -->
+    <div id="tovar-fields" style="display:none;">
+        <label>ID tovar:</label>
+        <input type="text" name="tovar-id"><br>
+        <label>Názov tovaru:</label>
+        <input type="text" name="tovar-nazov"><br>
+        <label>Nákupná cena:</label>
+        <input type="number" name="tovar-nakup-cena"><br>
+        <label>Predajná cena:</label>
+        <input type="number" name="tovar-predaj-cena"><br>
+        <label>Očakávaná marža:</label>
+        <input type="number" name="tovar-oc-marza"><br>
+        <label>Hmotnosť:</label>
+        <input type="number" name="tovar-hmotnost"><br>
+        <label>Popis tovaru:</label>
+        <input type="text" name="tovar-popis"><br>
+        <label>Výrobca:</label>
+        <input type="text" name="tovar-vyrobca"><br>
+        <label>ID typ tovaru:</label>
+        <input type="text" name="tovar-ID-typ-tovar"><br>
+    </div>      
+
+    <!-- PLATBA -->
+    <div id="platba-fields" style="display:none;">
+        <label>ID platba:</label>
+        <input type="text" name="platba-id"><br>
+        <label>Spôsob dopravy:</label>
+        <input type="text" name="platba-s-dopravy"><br>
+        <label>Cena dopravy:</label>
+        <input type="number" name="platba-cena-dopravy"><br>
+        <label>Cena platby:</label>
+        <input type="number" name="platba-cena-platby"><br>
+        <label>Komentár:</label>
+        <input type="number" name="platba-komentar"><br>
+        <label>ID partner:</label>
+        <input type="text" name="platba-ID-partner"><br>
+        
+    </div> 
+    
+    
+    <!-- SKUPINA TOVAR -->
+    <div id="skupina_tovar-fields" style="display:none;">
+        <label>ID skupina tovar:</label>
+        <input type="text" name="skupina_tovar-id"><br>
+        <label>Popis skupiny:</label>
+        <input type="text" name="skupina_tovar-popis"><br>
+        <label>Názov skupiny:</label>
+        <input type="text" name="skupina_tovar-nazov"><br>
+        
+        
+    </div>      
+
+
+
+        <br>
+        <input type="submit" value="Odoslať">
+    </form>
+</body>
+</html>

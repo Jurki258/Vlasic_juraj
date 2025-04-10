@@ -92,9 +92,19 @@
   <div class="overlay">
     
     
-   
-  <h1 style="text-align: center;">Svet-puzzle databáza</h1>
+    <h1 style="text-align: center;">Svet-puzzle databáza</h1>
 
+    <div style="text-align: center; margin-top: 20px;">
+        <div style="margin: 10px 0;">
+            <a href="/select">Prejdite na analýzu dát</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/form">Prejdite na vkladanie do databázy</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/delete">Prejdite na vymazávanie z databázy</a>
+        </div>
+    </div>
     
     <div class="container">
         <form method="GET">
@@ -113,8 +123,6 @@
             </select>
             <button type="submit">Zobraziť</button>
         </form>
-
-        
 
         <img src="{{ url_for('static', filename='svet-puzzle1.png') }}" alt="Svet Puzzle Logo" class="logo">
     </div>
@@ -411,3 +419,5 @@
     {% endif %}
 </body>
 </html>
+
+

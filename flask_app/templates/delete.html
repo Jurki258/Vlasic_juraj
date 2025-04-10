@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="sk">
+    <style>
+        body.background-image {
+            background-image: url("{{ url_for('static', filename='puzzle_pozadie.png') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+      
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.6);
+            min-height: 100vh;
+            padding: 20px;
+        }
+      
+        h1 {
+            text-align: center;
+            color: #000000;
+        }
+      
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+      
+        img.logo {
+          width: 150px;
+          height: auto;
+          display: block;
+          margin-left: auto;
+          margin-right: 0;
+        }
+      
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            width: 100%;
+        }
+      
+        select, input, button {
+            margin-top: 6px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+      
+        table {
+            width: 50%;
+            margin: 20px auto; /* centrovanie tabuľky */
+            border-collapse: collapse;
+            background-color: rgba(209, 181, 181, 0.2);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* jemný tieň pre oddelenie */
+            border-radius: 8px; /* zaoblené rohy */
+            overflow: hidden;
+        }
+      
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+      
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+      
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+      
+        tr:nth-child(even) {
+            background-color: #e6f7ff;
+        }
+      
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+      </style>
+      
+
+<body class="background-image">
+  <!-- Zosvetlenie pozadia cez overlay -->
+  <div class="overlay">
+    
+    
+
+    <h1 style="text-align: center;">Vymazanie záznamu</h1>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <div style="margin: 10px 0;">
+            <a href="/">Prejdite na úvodnú stránku</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/select">Prejdite na analýzu dát</a>
+        </div>
+        <div style="margin: 10px 0;">
+            <a href="/form">Prejdite na vkladanie do databázy</a>
+        </div>
+        
+    </div>
+    <img src="{{ url_for('static', filename='svet-puzzle1.png') }}" alt="Svet Puzzle Logo" class="logo">
+    <form action="/submit_delete" method="POST">
+        <label for="tabulka">Tabuľka:</label>
+        <select name="tabulka" id="tabulka" required>
+            <option value="svet_puzzle_stat">Štát</option>
+            <option value="svet_puzzle_okres">Okres</option>
+            <option value="svet_puzzle_mesto">Mesto</option>
+            <option value="svet_puzzle_partner">Partner</option>
+            <option value="svet_puzzle_dotaznik">Dotazník</option>
+            <option value="svet_puzzle_odoslana_objednavka">Odoslaná Objednávka</option>
+            <option value="svet_puzzle_prijata_objednavka">Prijatá Objednávka</option>
+            <option value="svet_puzzle_tovar">Tovar</option>
+            <option value="svet_puzzle_platba">Platba</option>
+            <option value="svet_puzzle_skupina_tovar">Skupina Tovar</option>
+        </select>
+        <br><br>
+        
+        <label for="id">ID záznamu:</label>
+        <input type="text" id="id" name="id" required>
+        <br><br>
+
+        <button type="submit_delete">Vymazať</button>
+    </form>
+    
+    
+</body>
+</html>
