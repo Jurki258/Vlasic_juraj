@@ -3,7 +3,7 @@ Functional database for eshop Svet-puzzle.sk
 
 Technology used:
 --------------------------------------------
-SQL, Python, HTML, Postgre 
+SQL, Python, Flask app HTML, PostgreSQL 
 
 Abstract:
 -------------------------------------------
