@@ -90,7 +90,11 @@ If no issues are detected, the row is successfully deleted from the database
 
 Summary
 --------------------
-This project was created as part of a diploma thesis and served as practical experience in SQL and Python development
+This project demonstrates how to build a simple yet functional web application using Flask and PostgreSQL, with a focus on practical database interaction. It allows users to view, insert, and delete data from multiple related tables, while respecting database integrity and relational constraints.
+The app also includes a basic KPI analysis tool with filters based on time period and entity type, making it a helpful tool for exploring structured data in a user-friendly way.
+
+
+
 
 
 
